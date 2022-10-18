@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 
 function Recipe() {
   const [recipe, setRecipe] = useState({});
-  const [activeTab, setActiveTab] = useState("ingredients");
+  const [activeTab, setActiveTab] = useState("summary");
   let params = useParams();
 
   const getRecipe = async () => {
@@ -27,10 +27,10 @@ function Recipe() {
       </div>
       <div className="flex-1 p-5">
         <button
-          className={`btn + ${activeTab == "ingredients" ? "btn-active" : ""}`}
-          onClick={() => setActiveTab("ingredients")}
+          className={`btn + ${activeTab == "summary" ? "btn-active" : ""}`}
+          onClick={() => setActiveTab("summary")}
         >
-          Ingredients
+          summary
         </button>
         <button
           className={`btn + ${activeTab == "instructions" ? "btn-active" : ""}`}
@@ -38,19 +38,11 @@ function Recipe() {
         >
           Recipe
         </button>
-        {activeTab === "ingredients" && (
-          <ul className="mt-8">
-            {recipe.extendedIngredients.map((ingredient) => (
-              <li key={ingredient.id}>- {ingredient.original}</li>
-            ))}
-          </ul>
+        {activeTab === "summary" && (
+          <div dangerouslySetInnerHTML={{ __html: recipe.summary }}></div>
         )}
         {activeTab === "instructions" && (
           <>
-            <div
-              className="mt-8"
-              dangerouslySetInnerHTML={{ __html: recipe.summary }}
-            ></div>
             <br />
             <div
               dangerouslySetInnerHTML={{ __html: recipe.instructions }}
